@@ -2,7 +2,7 @@
 
 import tweepy
 from creds import creds
-from urllib import urlretrieve
+import urllib
 from time import sleep
 from PIL import Image
 from random import randint
@@ -60,7 +60,7 @@ def main():
 
 				#download the photo
 				#add checks here for different photo types
-				urlretrieve(media['media_url_https'], 'photo.jpg')
+				urllib.request.urlretrieve(media['media_url_https'], 'photo.jpg')
 				sort_picture()
 
 				#post picture
