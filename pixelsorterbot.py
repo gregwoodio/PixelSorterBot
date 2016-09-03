@@ -6,6 +6,8 @@ import urllib
 from time import sleep
 from PIL import Image
 from random import randint
+import requests
+import shutil
 
 def get_api():
 	auth = tweepy.OAuthHandler(creds['consumer_key'], creds['consumer_secret'])
@@ -60,11 +62,16 @@ def main():
 
 				#download the photo
 				#add checks here for different photo types
-				urllib.request.urlretrieve(media['media_url_https'], 'photo.jpg')
+				#urllib.request.urlretrieve(media['media_url_https'], 'photo.jpg')
+				response = requests.get(media['media_url_https'], stream=True)
+				with open('photo.jpg', 'wb') as out_file:
+					shutil.copyfileobj(response.raw, out_file)
+				del response
+
 				sort_picture()
 
 				#post picture
-				api.update_with_media(filename='sorted.jpg', status=username, in_reply_to_status_id=id)
+				api.update_with_media(filename='sorted.jpg', status=username, in_reply_to_status_id=mention.id)
 
 				#wait a bit for rate limiting
 				sleep(15)
