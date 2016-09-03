@@ -55,13 +55,16 @@ def main():
 		for media in mention.extended_entities['media']:
 			if media['type'] == 'photo':
 
+				#username
+				username = '@' + mention.user.screen_name
+
 				#download the photo
 				#add checks here for different photo types
 				urlretrieve(media['media_url_https'], 'photo.jpg')
 				sort_picture()
 
 				#post picture
-				api.update_with_media(filename='sorted.jpg', in_reply_to_status_id=id)
+				api.update_with_media(filename='sorted.jpg', status=username, in_reply_to_status_id=id)
 
 				#wait a bit for rate limiting
 				sleep(15)
