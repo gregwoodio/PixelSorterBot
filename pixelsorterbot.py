@@ -76,7 +76,9 @@ def main():
 				#wait a bit for rate limiting
 				sleep(15)
 
-		write_latest_id(mention.id)
+		if id < mention.id:
+			id = mention.id
+			write_latest_id(id)
 
 if __name__ == '__main__':
 	main()
